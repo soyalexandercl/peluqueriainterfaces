@@ -1,16 +1,18 @@
 package vistas;
 
-import java.awt.Dimension;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class VistaSimulacion extends JFrame {
+    
     public VistaSimulacion() {
-        setTitle("Simulación Peluquería");
+        setTitle("Simulación de la Peluquería (PSP)");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setMinimumSize(new Dimension(800, 600));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose para no cerrar toda la app
         setLocationRelativeTo(null);
-        setResizable(true);
+        
+        add(new JLabel("AQUÍ IRÁ LA SIMULACIÓN VISUAL", SwingConstants.CENTER));
         
         setVisible(true);
     }
