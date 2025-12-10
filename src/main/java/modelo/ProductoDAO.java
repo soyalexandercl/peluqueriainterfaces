@@ -64,4 +64,21 @@ public class ProductoDAO {
             return false;
         }
     }
+
+    // ... código existente ...
+
+    // Método auxiliar para asignar un producto por defecto a los servicios nuevos
+    public int obtenerPrimerProducto() {
+        String sql = "SELECT id_producto FROM productos LIMIT 1";
+        try (Connection con = Conexion.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error buscando producto: " + e.getMessage());
+        }
+        return -1; // No hay productos
+    }
 }

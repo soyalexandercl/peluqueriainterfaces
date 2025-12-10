@@ -3,7 +3,8 @@ package controladores;
 import vistas.VistaAdministracion;
 import vistas.VistaClientes;
 import vistas.VistaPeluqueras;
-import vistas.VistaProductos; // Importamos la nueva vista
+import vistas.VistaProductos;
+import vistas.VistaServicios; // Importar
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,30 +15,35 @@ public class ControladorAdministracion implements ActionListener {
     // Vistas secundarias
     private VistaClientes vistaClientes;
     private VistaPeluqueras vistaPeluqueras;
-    private VistaProductos vistaProductos; // Declaramos la nueva vista
+    private VistaProductos vistaProductos;
+    private VistaServicios vistaServicios; // Nueva vista
 
     public ControladorAdministracion(VistaAdministracion vista) {
         this.vistaPrincipal = vista;
         
-        // 1. Instanciar los paneles
+        // 1. Instancias
         this.vistaClientes = new VistaClientes();
         this.vistaPeluqueras = new VistaPeluqueras();
-        this.vistaProductos = new VistaProductos(); // Instanciar productos
+        this.vistaProductos = new VistaProductos();
+        this.vistaServicios = new VistaServicios(); // Instancia
         
-        // 2. Añadir al mazo de cartas (CardLayout)
+        // 2. CardLayout
         this.vistaPrincipal.panelCentral.add(vistaClientes, "PANEL_CLIENTES");
         this.vistaPrincipal.panelCentral.add(vistaPeluqueras, "PANEL_PELUQUERAS");
-        this.vistaPrincipal.panelCentral.add(vistaProductos, "PANEL_PRODUCTOS"); // Añadir al layout
+        this.vistaPrincipal.panelCentral.add(vistaProductos, "PANEL_PRODUCTOS");
+        this.vistaPrincipal.panelCentral.add(vistaServicios, "PANEL_SERVICIOS"); // Añadir
         
-        // 3. Iniciar los controladores de cada sección
+        // 3. Controladores
         new ControladorClientes(vistaClientes);
         new ControladorPeluqueras(vistaPeluqueras);
-        new ControladorProductos(vistaProductos); // Iniciar lógica productos
+        new ControladorProductos(vistaProductos);
+        new ControladorServicios(vistaServicios); // Iniciar controlador
         
-        // 4. Activar los botones del menú lateral
+        // 4. Listeners Menú
         this.vistaPrincipal.botonMenuClientes.addActionListener(this);
         this.vistaPrincipal.botonMenuPeluqueras.addActionListener(this);
-        this.vistaPrincipal.botonMenuProductos.addActionListener(this); // Activar botón productos
+        this.vistaPrincipal.botonMenuProductos.addActionListener(this);
+        this.vistaPrincipal.botonMenuServicios.addActionListener(this); // Listener
         
         this.vistaPrincipal.setVisible(true);
     }
@@ -52,6 +58,9 @@ public class ControladorAdministracion implements ActionListener {
         }
         else if (e.getSource() == vistaPrincipal.botonMenuProductos) {
             vistaPrincipal.cardLayout.show(vistaPrincipal.panelCentral, "PANEL_PRODUCTOS");
+        }
+        else if (e.getSource() == vistaPrincipal.botonMenuServicios) { // Navegación
+            vistaPrincipal.cardLayout.show(vistaPrincipal.panelCentral, "PANEL_SERVICIOS");
         }
     }
 }
