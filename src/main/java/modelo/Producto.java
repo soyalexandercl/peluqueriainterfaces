@@ -2,8 +2,8 @@ package modelo;
 
 public class Producto {
     private int id;
-    private int idProveedor;
-    private String nombreProveedor; // Campo auxiliar para mostrar en la tabla
+    private int idProveedor;        // La clave foránea (FK)
+    private String nombreProveedor; // Campo auxiliar para mostrar en la tabla (no está en la tabla productos, viene del JOIN)
     private String nombre;
     private int stock;
     private int stockMaximo;

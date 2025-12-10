@@ -9,6 +9,7 @@ import java.util.List;
 
 public class ProveedorDAO {
     
+    // Obtener todos los proveedores
     public List<Proveedor> listarProveedores() {
         List<Proveedor> lista = new ArrayList<>();
         String sql = "SELECT * FROM proveedores";
@@ -24,13 +25,13 @@ public class ProveedorDAO {
         return lista;
     }
 
-    // Método auxiliar para asegurar que existe al menos un proveedor (para pruebas)
+    // Método auxiliar inteligente: Si no hay proveedores, crea uno por defecto para que no falle la inserción de productos
     public int obtenerOInsertarProveedorDefecto() {
         List<Proveedor> lista = listarProveedores();
         if (!lista.isEmpty()) {
-            return lista.get(0).getId();
+            return lista.get(0).getId(); // Devuelve el primero que encuentre
         }
-        // Si no hay, creamos uno
+        // Si no hay ninguno, creamos uno automático
         String sql = "INSERT INTO proveedores (nombre) VALUES ('Proveedor General') RETURNING id_proveedor";
         try (Connection con = Conexion.getConexion();
              PreparedStatement ps = con.prepareStatement(sql);
@@ -39,6 +40,6 @@ public class ProveedorDAO {
         } catch (SQLException e) {
              System.out.println("Error creando proveedor defecto: " + e.getMessage());
         }
-        return -1;
+        return -1; // Error
     }
 }

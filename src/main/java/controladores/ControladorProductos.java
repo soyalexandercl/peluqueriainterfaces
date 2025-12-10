@@ -34,7 +34,7 @@ public class ControladorProductos implements ActionListener {
             Object[] fila = {
                 p.getId(),
                 p.getNombre(),
-                p.getNombreProveedor(), // ¡Muestra el nombre del proveedor!
+                p.getNombreProveedor(), // ¡Muestra el nombre, no el número!
                 p.getStock() + " / " + p.getStockMaximo(),
                 String.format("%.2f €", p.getPrecio())
             };
@@ -48,14 +48,14 @@ public class ControladorProductos implements ActionListener {
             cargarTabla();
         }
         else if (e.getSource() == vista.botonAgregar) {
-            // Lógica inteligente: Obtenemos un ID de proveedor válido automáticamente
+            // Lógica: Buscamos un proveedor válido automáticamente para no complicar la UI ahora
             int idProv = proveedorDAO.obtenerOInsertarProveedorDefecto();
             
             if (idProv != -1) {
-                // Simulamos la entrada de datos
+                // Simulamos la entrada de datos (más adelante haremos el formulario)
                 Producto nuevo = new Producto(0, idProv, "Champú Premium", 50, 100, 12.50);
                 if (productoDAO.insertarProducto(nuevo)) {
-                    JOptionPane.showMessageDialog(vista, "Producto añadido (Vinculado a proveedor por defecto)");
+                    JOptionPane.showMessageDialog(vista, "Producto añadido (Vinculado a 'Proveedor General')");
                     cargarTabla();
                 } else {
                     JOptionPane.showMessageDialog(vista, "Error al insertar producto.");
@@ -66,7 +66,10 @@ public class ControladorProductos implements ActionListener {
         }
         else if (e.getSource() == vista.botonEliminar) {
             int fila = vista.tablaProductos.getSelectedRow();
-            if (fila == -1) return;
+            if (fila == -1) {
+                JOptionPane.showMessageDialog(vista, "Selecciona un producto.");
+                return;
+            }
             
             int id = (int) vista.modeloTabla.getValueAt(fila, 0);
             if(productoDAO.eliminarProducto(id)) {

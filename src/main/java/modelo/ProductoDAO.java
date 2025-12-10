@@ -11,7 +11,7 @@ public class ProductoDAO {
 
     public List<Producto> listarProductos() {
         List<Producto> lista = new ArrayList<>();
-        // JOIN para obtener el nombre del proveedor
+        // JOIN para obtener el nombre del proveedor (tabla proveedores) cruzando con productos
         String sql = "SELECT p.id_producto, p.nombre, p.stock, p.stock_maximo, p.precio, p.id_proveedor, pro.nombre AS nombre_proveedor " +
                      "FROM productos p JOIN proveedores pro ON p.id_proveedor = pro.id_proveedor";
 
@@ -26,7 +26,7 @@ public class ProductoDAO {
                 p.setStockMaximo(rs.getInt("stock_maximo"));
                 p.setPrecio(rs.getDouble("precio"));
                 p.setIdProveedor(rs.getInt("id_proveedor"));
-                p.setNombreProveedor(rs.getString("nombre_proveedor")); // Dato del JOIN
+                p.setNombreProveedor(rs.getString("nombre_proveedor")); // Dato extraído del JOIN
                 lista.add(p);
             }
         } catch (SQLException e) {

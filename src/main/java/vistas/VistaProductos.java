@@ -22,7 +22,7 @@ public class VistaProductos extends JPanel {
         modeloTabla = new DefaultTableModel();
         modeloTabla.addColumn("ID");
         modeloTabla.addColumn("Nombre");
-        modeloTabla.addColumn("Proveedor"); // Mostraremos nombre, no ID
+        modeloTabla.addColumn("Proveedor"); // Aquí mostraremos el nombre del proveedor
         modeloTabla.addColumn("Stock");
         modeloTabla.addColumn("Precio");
         

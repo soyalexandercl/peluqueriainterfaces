@@ -3,7 +3,7 @@ package controladores;
 import vistas.VistaAdministracion;
 import vistas.VistaClientes;
 import vistas.VistaPeluqueras;
-import vistas.VistaProductos; // Importar
+import vistas.VistaProductos; // Importamos la nueva vista
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,30 +14,30 @@ public class ControladorAdministracion implements ActionListener {
     // Vistas secundarias
     private VistaClientes vistaClientes;
     private VistaPeluqueras vistaPeluqueras;
-    private VistaProductos vistaProductos; // Declarar
+    private VistaProductos vistaProductos; // Declaramos la nueva vista
 
     public ControladorAdministracion(VistaAdministracion vista) {
         this.vistaPrincipal = vista;
         
-        // 1. Instanciar Vistas
+        // 1. Instanciar los paneles
         this.vistaClientes = new VistaClientes();
         this.vistaPeluqueras = new VistaPeluqueras();
-        this.vistaProductos = new VistaProductos(); // Instanciar
+        this.vistaProductos = new VistaProductos(); // Instanciar productos
         
-        // 2. Añadir al CardLayout
+        // 2. Añadir al mazo de cartas (CardLayout)
         this.vistaPrincipal.panelCentral.add(vistaClientes, "PANEL_CLIENTES");
         this.vistaPrincipal.panelCentral.add(vistaPeluqueras, "PANEL_PELUQUERAS");
-        this.vistaPrincipal.panelCentral.add(vistaProductos, "PANEL_PRODUCTOS"); // Añadir
+        this.vistaPrincipal.panelCentral.add(vistaProductos, "PANEL_PRODUCTOS"); // Añadir al layout
         
-        // 3. Controladores
+        // 3. Iniciar los controladores de cada sección
         new ControladorClientes(vistaClientes);
         new ControladorPeluqueras(vistaPeluqueras);
-        new ControladorProductos(vistaProductos); // Iniciar lógica
+        new ControladorProductos(vistaProductos); // Iniciar lógica productos
         
-        // 4. Listeners del Menú
+        // 4. Activar los botones del menú lateral
         this.vistaPrincipal.botonMenuClientes.addActionListener(this);
         this.vistaPrincipal.botonMenuPeluqueras.addActionListener(this);
-        this.vistaPrincipal.botonMenuProductos.addActionListener(this); // Listener
+        this.vistaPrincipal.botonMenuProductos.addActionListener(this); // Activar botón productos
         
         this.vistaPrincipal.setVisible(true);
     }
