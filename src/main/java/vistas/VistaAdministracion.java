@@ -1,66 +1,75 @@
-package vistas;
+package controladores;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import vistas.VistaAdministracion;
+import vistas.VistaCitas; // Importar
+import vistas.VistaClientes;
+import vistas.VistaPeluqueras;
+import vistas.VistaProductos;
+import vistas.VistaServicios;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class VistaAdministracion extends JFrame {
+public class ControladorAdministracion implements ActionListener {
     
-    // Layout que permite intercambiar paneles (como cartas de una baraja)
-    public CardLayout cardLayout; 
-    public JPanel panelCentral;   // Aquí se mostrarán las vistas (Clientes, Citas, etc.)
+    private VistaAdministracion vistaPrincipal;
+    
+    // Vistas secundarias
+    private VistaClientes vistaClientes;
+    private VistaPeluqueras vistaPeluqueras;
+    private VistaProductos vistaProductos;
+    private VistaServicios vistaServicios;
+    private VistaCitas vistaCitas; // Declarar
 
-    // Botones del menú lateral
-    public JButton botonMenuClientes;
-    public JButton botonMenuCitas;
-    public JButton botonMenuPeluqueras;
-    public JButton botonMenuServicios;
-    public JButton botonMenuProductos;
-    public JButton botonMenuFacturas;
-
-    public VistaAdministracion() {
-        setTitle("Administrar Peluquería - Sistema de Gestión");
-        setExtendedState(JFrame.MAXIMIZED_BOTH); // Pantalla completa
-        setMinimumSize(new Dimension(800, 600));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setLayout(new BorderLayout()); // Diseño principal
-
-        // --- 1. Menú Lateral (Izquierda) ---
-        JPanel panelMenu = new JPanel(new GridLayout(7, 1, 10, 10)); // 7 filas, 1 columna
+    public ControladorAdministracion(VistaAdministracion vista) {
+        this.vistaPrincipal = vista;
         
-        // Inicializamos botones
-        botonMenuClientes = new JButton("Gestión Clientes");
-        botonMenuCitas = new JButton("Gestión Citas");
-        botonMenuPeluqueras = new JButton("Gestión Peluqueras");
-        botonMenuServicios = new JButton("Servicios");
-        botonMenuProductos = new JButton("Inventario Productos");
-        botonMenuFacturas = new JButton("Facturación");
-        JButton botonSalir = new JButton("Salir"); // Opcional
-
-        // Añadimos al panel lateral
-        panelMenu.add(botonMenuClientes);
-        panelMenu.add(botonMenuCitas);
-        panelMenu.add(botonMenuPeluqueras);
-        panelMenu.add(botonMenuServicios);
-        panelMenu.add(botonMenuProductos);
-        panelMenu.add(botonMenuFacturas);
-        panelMenu.add(botonSalir);
-
-        add(panelMenu, BorderLayout.WEST); // Ponemos el menú a la izquierda
-
-        // --- 2. Panel Central (Contenido Cambiante) ---
-        cardLayout = new CardLayout();
-        panelCentral = new JPanel(cardLayout);
+        // 1. Instancias
+        this.vistaClientes = new VistaClientes();
+        this.vistaPeluqueras = new VistaPeluqueras();
+        this.vistaProductos = new VistaProductos();
+        this.vistaServicios = new VistaServicios();
+        this.vistaCitas = new VistaCitas(); // Instancia
         
-        // Aquí añadiremos los paneles desde el Controlador
+        // 2. CardLayout
+        this.vistaPrincipal.panelCentral.add(vistaClientes, "PANEL_CLIENTES");
+        this.vistaPrincipal.panelCentral.add(vistaPeluqueras, "PANEL_PELUQUERAS");
+        this.vistaPrincipal.panelCentral.add(vistaProductos, "PANEL_PRODUCTOS");
+        this.vistaPrincipal.panelCentral.add(vistaServicios, "PANEL_SERVICIOS");
+        this.vistaPrincipal.panelCentral.add(vistaCitas, "PANEL_CITAS"); // Añadir
         
-        add(panelCentral, BorderLayout.CENTER);
+        // 3. Controladores
+        new ControladorClientes(vistaClientes);
+        new ControladorPeluqueras(vistaPeluqueras);
+        new ControladorProductos(vistaProductos);
+        new ControladorServicios(vistaServicios);
+        new ControladorCitas(vistaCitas); // Iniciar lógica
         
-        // No hacemos setVisible(true) aquí, lo hará el controlador
+        // 4. Listeners Menú
+        this.vistaPrincipal.botonMenuClientes.addActionListener(this);
+        this.vistaPrincipal.botonMenuPeluqueras.addActionListener(this);
+        this.vistaPrincipal.botonMenuProductos.addActionListener(this);
+        this.vistaPrincipal.botonMenuServicios.addActionListener(this);
+        this.vistaPrincipal.botonMenuCitas.addActionListener(this); // Activar botón
+        
+        this.vistaPrincipal.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == vistaPrincipal.botonMenuClientes) {
+            vistaPrincipal.cardLayout.show(vistaPrincipal.panelCentral, "PANEL_CLIENTES");
+        } 
+        else if (e.getSource() == vistaPrincipal.botonMenuPeluqueras) {
+            vistaPrincipal.cardLayout.show(vistaPrincipal.panelCentral, "PANEL_PELUQUERAS");
+        }
+        else if (e.getSource() == vistaPrincipal.botonMenuProductos) {
+            vistaPrincipal.cardLayout.show(vistaPrincipal.panelCentral, "PANEL_PRODUCTOS");
+        }
+        else if (e.getSource() == vistaPrincipal.botonMenuServicios) {
+            vistaPrincipal.cardLayout.show(vistaPrincipal.panelCentral, "PANEL_SERVICIOS");
+        }
+        else if (e.getSource() == vistaPrincipal.botonMenuCitas) { // Navegación
+            vistaPrincipal.cardLayout.show(vistaPrincipal.panelCentral, "PANEL_CITAS");
+        }
     }
 }
