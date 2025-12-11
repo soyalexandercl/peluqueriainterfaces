@@ -7,11 +7,8 @@ public class Cliente {
     private String telefono;
     private boolean esVip;
 
-    // Constructor vacío
-    public Cliente() {
-    }
+    public Cliente() {}
 
-    // Constructor con datos
     public Cliente(int id, String nombre, String apellidos, String telefono, boolean esVip) {
         this.id = id;
         this.nombre = nombre;
@@ -20,7 +17,6 @@ public class Cliente {
         this.esVip = esVip;
     }
 
-    // Getters y Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     public String getNombre() { return nombre; }
@@ -31,4 +27,10 @@ public class Cliente {
     public void setTelefono(String telefono) { this.telefono = telefono; }
     public boolean isEsVip() { return esVip; }
     public void setEsVip(boolean esVip) { this.esVip = esVip; }
+
+    // NUEVO: Para que el ComboBox muestre el nombre completo
+    @Override
+    public String toString() {
+        return nombre + " " + apellidos + " (VIP: " + (esVip ? "Sí" : "No") + ")";
+    }
 }

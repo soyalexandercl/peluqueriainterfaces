@@ -6,9 +6,9 @@ public class Servicio {
     private int id;
     private String nombre;
     private double precio;
-    private Time duracion; // Usamos java.sql.Time para la duración (HH:MM:SS)
+    private Time duracion;
     private int idProducto;
-    private String nombreProducto; // Para mostrar en la tabla
+    private String nombreProducto;
 
     public Servicio() {}
 
@@ -20,7 +20,6 @@ public class Servicio {
         this.idProducto = idProducto;
     }
 
-    // Getters y Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     public String getNombre() { return nombre; }
@@ -33,4 +32,10 @@ public class Servicio {
     public void setIdProducto(int idProducto) { this.idProducto = idProducto; }
     public String getNombreProducto() { return nombreProducto; }
     public void setNombreProducto(String nombreProducto) { this.nombreProducto = nombreProducto; }
+
+    // NUEVO
+    @Override
+    public String toString() {
+        return nombre + " (" + precio + "€ - " + duracion + ")";
+    }
 }

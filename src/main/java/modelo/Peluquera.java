@@ -6,11 +6,10 @@ public class Peluquera {
     private String apellidos;
     private String telefono;
     private int aniosExperiencia;
-    private String especialidad; // Ej: Corte, Color, Peinado
-    private String estado;       // Ej: Disponible, Ocupada, Descanso
+    private String especialidad;
+    private String estado;
 
-    public Peluquera() {
-    }
+    public Peluquera() {}
 
     public Peluquera(int id, String nombre, String apellidos, String telefono, int aniosExperiencia, String especialidad, String estado) {
         this.id = id;
@@ -22,7 +21,6 @@ public class Peluquera {
         this.estado = estado;
     }
 
-    // Getters y Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     public String getNombre() { return nombre; }
@@ -37,4 +35,10 @@ public class Peluquera {
     public void setEspecialidad(String especialidad) { this.especialidad = especialidad; }
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
+
+    // NUEVO
+    @Override
+    public String toString() {
+        return nombre + " " + apellidos + " [" + especialidad + "]";
+    }
 }
